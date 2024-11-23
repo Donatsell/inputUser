@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Sapaan AJAX</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <div class="form-container">
+        <h2>Form Sapa menggunakan AJAX</h2>
+        <form id="formId" action=""> 
+            <input type="text" id="nama" placeholder="Masukkan nama" required />
+            <button type="button" onclick="loadDoc()">Kirim</button>
+            <div id="errorMessage" class="error"></div>
+        </form>
+        <div id="greeting"></div>
+
+        </div>
+<script>
+    function loadDoc() {
+            const nameInput = document.getElementById("nama");
+            const errorMessage = document.getElementById("errorMessage");
+            const greetingDiv = document.getElementById("greeting");
+
+            errorMessage.textContent = "";
+            greetingDiv.textContent = "";
+
+            if (nameInput.value === "") {
+                errorMessage.textContent = "Nama tidak boleh kosong.";
+                nameInput.focus();
+                return;
+            }
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'sapa.php?nama=' + encodeURIComponent(nameInput.value), true);
+
+            xhr.onload = function () {
+                greetingDiv.innerHTML = `Halo, ${nameInput.value}! Selamat datang di AJAX! <br>`;
+            };
+
+            xhr.onerror = function () {
+                errorMessage.textContent = "Error fetching data.";
+            };
+
+            xhr.send();
+        }
+</script>
+</body>
+
+</html>
+
+
+
